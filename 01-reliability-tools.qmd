@@ -1,5 +1,4 @@
 
-
 # Assignment 1: Reliability and tools for reproducible data science {#assignment1}
 
 The purpose of this assignment is to present estimates of reliability of measures collected in the physiology lab. A second purpose is to use tools for reproducible data science. The report that you are expected to hand in therefore has some strict requirements in its format (see [assignment description](https://dhammarstrom.github.io/quant-methods-workshops/assignment-1.html)). The assignment is a group assignment and at least three students are expected to contribute to each report.
@@ -12,3 +11,230 @@ The purpose of this assignment is to present estimates of reliability of measure
 - At least one figure (created from your data), and
 - data presented in the text.
 - The report should use a bibliography file to manage references.
+
+
+# Reliabilitet og verktøy for å reprodusere data
+
+Hensikten med denne rapporten er å presentere estimater for reliabilitet av data samlet i fysiologisk testlab ved Høgskolen i Innlandet. Vi har gjennomført VO2max tester på sykkel der 16 deltakere har gjennomført 2 eller 4 tester i løpet av tre uker. De to første testene ble gjennomført med ca. 24 timers mellomrom i uke en. De to siste testene ble gjennomført med ca. 48 timers mellomrom i uke tre. Vi har brukt Rstudio for å analysere dataen og få svar på om våre tester er reliable.
+
+## Standardisering før test
+
+Deltakerne ble instruert om å ikke trene dagen før test. Næringsinntaket, her også koffein og væske, de to siste måltidene skulle være likt før hver test. Deltakerne ble også bedt om å tilstrebe lik døgnrytme. Alle deltakerne hadde samme testtidspunkt hver testdag [@halperin2015].
+
+## Protokoll
+
+-       Forbrede plotteark (heime)
+
+-       Ta på labfrakk
+
+-       Skru på biosen, sjekk standardvæske
+
+-       Åpne gass, sjekk at trippel v, står i vyntus, start kalibrering gass på vyntus, sett sammen munnstykke og gjøre klar slange (slange festes til munnstykke på sykkel og til miksekammeret) mens kalibrering pågår (bruk hansker og fest papir på med neseklypa).
+
+-       Kalibrer volum
+
+-       Sjekke krankarm på sykkel (172,5cm) og riktig pedaltype
+
+-       Sette krankarmen rett opp og kalibrere sykkel
+
+-       Logg på onedrive-skolekontoen, gjør klart plotteskjema
+
+-       Finn frem laktatutstyr. Rør(+ekstra) teip og papir
+
+-       Ta imot og måle vekta på utøver
+
+-       Legg til info om ny person på vyntus: idr4000_h24_g3_test(x), vekt, høyde, kjønn, fødselsdato, eller bruke eksisterande bruker om det er registret frå før og endre vekta
+
+-       Legg til info om ny person på lode-pcn: idr4000_h24_g3_test(x), vekt, høyde, kjønn, fødselsdato, eller bruke eksisterende bruker om det er registrert før
+
+-       Stille sykkel så det ser bra ut og er behagelig for utøver
+
+-       Gi litt watt til utøver for oppvarming (10-13 på borg skala i 5min)
+
+-       Skru på vifte om deltaker ønsker
+
+-       Gå inn på måling, sjekke at det står medium på munnstykke, 30sek målinger, pulsbeltet koblet til.
+
+-       Informere om at testen kommer til å foregå trappetrinsvis ved økninger i watt per min (20w for damer og 25w for menn) og at målet skal vere å sykle til det ikkje går lenger, at det blir målinger hvert 30sek og at man skal sitte gjennom hele testen, og forklare borg skala
+
+-       Gå fra check phase til test phase i vyntus
+
+-       Starte testen ved å trykke på klokka og sykkel pc etter 1min er gått i vyntus
+
+-       Informere om økninger og målinger underveis i testen
+
+-       Motivere og pushe
+
+-       Se på tid, watt og makspuls ved slutten av testen, spørre etter borg – notere ned i plotteark
+
+-       Ta laktat 1 min etter utøver ga seg
+
+-       Måle laktat i biosen og plotte inn i plotteark
+
+-       Passe på at det går bra med utøver
+
+-       Stoppe test i vyntus
+
+-       Lagre data på sykkel-pc
+
+-       Vaske rør, munnstykke og sykkel
+
+-       Bruke vifta til å tørke miksekammeret
+
+-       Plotte verdier fra vyntus
+
+-       Lagre vyntusfil i minnepenn og over i onedrive på lab pc
+
+-       Bytte fra minnepenn til bluetooth-kobleren til pulsbeltet
+
+-       Lagre plotteskjema
+
+-       Ta ut av cidex
+
+-       Sette biosen i stand by om vi er siste igjen i labben
+
+**Standardisering mellom testene**
+
+-       De to siste måltidene før test like
+
+-       Lik trening dagene i forkant av testdag
+
+-       Drikke like mye
+
+```{r}
+#| echo: false
+#| warning: false
+
+library(readxl)
+library(dplyr)
+
+vars <- c("id", "timepoint", "temperature", "humidity", 
+          "sex", "age", "height", "weight", "w.max", 
+          "vo2.max", "vco2.max", "rer.max", "ve.max", 
+          "bf.max", "hr.max", "la.max", 
+          "borg.max")
+
+
+dat <- bind_rows(
+read_excel("g1.xlsx", sheet = "data_excel", na = "na") %>%
+  select(all_of(vars)) %>%
+  mutate(group = "G1", 
+         id = paste0(group, "_", id)) ,
+
+read_excel("g2.xlsx", na = "na") %>%
+   select(all_of(vars)) %>%
+  mutate(group = "G2", 
+         id = paste0(group, "_", id)) ,
+
+read_excel("g3.xlsx") %>%
+   select(all_of(vars)) %>%
+  mutate(timepoint = paste0("t", timepoint), 
+         group = "G3", 
+         id = paste0(group, "_", id)) ,
+
+read_excel("g4.xlsx") %>%
+   select(all_of(vars)) %>%
+  mutate(group = "G4", 
+         id = paste0(group, "_", id)) )
+  
+
+
+```
+
+## Figur 1
+
+```{r}
+#| echo: false
+#| warning: false
+
+library(ggplot2)
+  ggplot(data = dat, aes(x = id , y = vo2.max, color = timepoint)) + geom_point() + geom_smooth() +
+    labs(x = "deltaker",
+         y = "VO2.max (ml/min)",
+         title = "VO2.max per deltaker per test",
+         color = "test tidspunkt") +
+     scale_x_discrete(guide = guide_axis(n.dodge=3))
+  
+
+ 
+```
+
+Figur 1 viser det absolutte maksimale oksygenopptaket til hver enkelt deltaker, sammenlignet med alle testene som ble gjennomført til alle deltakerne.
+
+## Tabell 1
+
+```{r}
+#| echo: false
+#| warning: false
+#| 
+
+library(tidyverse)
+library(gt)
+
+
+dat %>%
+  select(id, timepoint, vo2.max) %>%
+  pivot_wider(names_from = timepoint,
+              values_from = vo2.max) %>%
+  gt()
+
+```
+
+Tabell 1 viser det samme som "Figur 1", men her kan man lettere se hvor mange tester hver enkelt deltaker har gjennomført og hvilket resultat som hører til hvilken test.
+
+## Beregning av standardfeil mellom test 1 og test 2
+
+```{r}
+#| echo: false
+
+cv1 <- dat %>%
+  select(id, timepoint, vo2.max) %>%
+  pivot_wider(names_from = timepoint, 
+              values_from = vo2.max) %>%
+  
+  mutate(diff = t2 - t1) %>% 
+  summarise(mean = mean(c(t1, t2), na.rm = TRUE), 
+            sd = sd(diff, na.rm = TRUE),  
+            te = sd / sqrt(2), 
+            cv = 100 * (te/mean)) 
+
+
+cv1 %>% gt() %>%
+   fmt_number(decimals = 1) 
+
+cv_percent1 <- round(cv1$cv,2) 
+
+
+```
+
+
+
+## Beregning av standardfeil mellom test 3 og test 4
+
+```{r}
+#| echo: false
+
+cv2 <- dat %>%
+  select(id, timepoint, vo2.max) %>%
+  pivot_wider(names_from = timepoint, 
+              values_from = vo2.max) %>%
+  
+  mutate(diff = t3 - t4) %>% 
+  summarise(mean = mean(c(t1, t2), na.rm = TRUE), 
+            sd = sd(diff, na.rm = TRUE),  
+            te = sd / sqrt(2), 
+            cv = 100 * (te/mean)) 
+  
+cv2 %>% gt() %>% 
+  fmt_number(decimals = 1) 
+
+
+cv_percent2 <- round(cv2$cv,1)
+
+```
+
+## Resultat
+
+Vi kalkulerte at variasjonskoeffisienten (CV) for test 1 og test 2 ble `r cv_percent1`%. I følge Dr. Will G. Hopkins indikerer en variasjonskoeffisient (CV) på under 5% god reliabilitet [@hopkins2000a]. Det vil si at resultatene for test 1 og test 2 har relativt lav variabilitet og bør betraktes som reliable. For test 3 og test 4 kalkulerte vi at variasjonskoeffisienten (CV) ble `r cv_percent2`%. Det vil si at også resultatene for test 3 og test 4 kan betraktes som reliable, men har mer variabilitet enn resultatene fra test 1 og test 2 da variasjonskoeffisienten er noe høyere.
+
+
