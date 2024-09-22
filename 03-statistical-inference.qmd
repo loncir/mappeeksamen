@@ -1,4 +1,272 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
 # Assignment 3: Drawing inference from statistical models, and statistical power {#assignment3}
 
-This assignment is set up as a statistical laboratory, we will perform simulations and your assignment is to interpret and explain the results. Create a report based on the code used in the lab and make sure you answer the specified questions (1-8). You can be as creative as you want and explore the results further. 
+The study was set up as a statistical laboratory, were we performed.
+The purpose of this rapport is to interpret and explain the results we got.
 
+Method We simulated a population of one million numbers with a mean of 1.5 and a standard deviation of 3.
+We then made two different set of studies, one set with a sample size of 8 and one set with a sample size of 40.
+
+```{r}
+
+library(tidyverse)
+
+set.seed(1)
+population <- rnorm(1000000, mean = 1.5, sd = 3)
+
+
+samp1 <- data.frame(y = sample(population, 8, replace = FALSE))
+
+samp2 <- data.frame(y = sample(population, 40, replace = FALSE))
+
+
+m1 <- lm(y ~ 1, data = samp1)
+m2 <- lm(y ~ 1, data = samp2)
+
+summary(m1)
+summary(m2)
+```
+
+here m1 is???
+and m2 is???
+Our null hypothesis is???
+
+## 1. Explain the estimate, SE, t-value, and p-value from the regression models that we created previously (m1 and m2). CITE
+
+The estimate in the linear model corresponds to the intercept, which is the average of the dependent variable y (the sample).
+In our model, the estimate represents the mean of the differences between the two treatments in the cross-over study.
+In model m1, the estimate is 1.84.
+This means that the average difference between the two treatments for the sample of 8 participants is 1.84.
+In model m2, the estimate is 1.5642, meaning that the average difference between the two treatments for the sample of 40 participants is a little lower than for the sample of 8.
+Furthermore, the standard error (SE) provides an estimate of how much variability we expect in the sample mean if we were to repeatedly draw samples of the same size from the population.
+It is calculated as the sample's standard deviation (SD) divided by the square root of the sample size (LEGGE INN FORMEL).
+In m1, the standard error (SE) is 1.251, which tells us how much the sample mean of 1.84 might vary if we were to repeat the study multiple times with a sample size of 8.
+In m2, the standard error is 0.4774 indicating that the sample size of 40 participants gives us a more precise estimate of the population mean.
+The t-value is a ratio that compares the difference between the sample mean (estimate), and the null hypothesis relative to the standard error (SE).
+It is calculated as (FORMEL).
+In m1, the t.value is 1.47, meaning the observed mean difference (1.84) is 1.47 standard errors away from the null hypothesis value of 0.
+The t.value for m2 is almost three times bigger as it is 3.276 indicating that the observed mean difference (0.4774) is 3.276 standard errors away from the null hypothesis.
+Lastly, the p-value tells us the probability of observing a t-value as extreme (or more extreme) than the one calculated, assuming the null hypothesis is true (i.e., no difference between treatments).
+In m1, the p-value is 0.185, meaning that there is an 18.5% chance of observing a difference of 1.84 or more if the true difference between the treatments was zero.
+Since this p-value is above the conventional threshold of 0.05, we fail to reject the null hypothesis, suggesting that the observed difference is not statistically significant.
+In m2, the p-value is 0.00221, meaning that there is an 0.221% chance of observing a difference of 1.5642 or more if the true difference between the treatments was zero.
+In comparison to m1, this p-value is below the conventional threshold of 0.05.
+We therefore reject the null hypothesis, suggesting that the observed difference is statistically significant and there is evidence that the means differ.
+
+## 2. Discuss what contributes to the different results in the two studies (m1 and m2).
+
+CITE
+
+The two studies differ primarily in sample size, where m2 have 5 times more participants than m1.
+Since m1 have a small sample, the mean might fluctuate more due to random variation, whereas larger samples (m2) tend to provide a more stable and reliable estimate closer to the true population mean (CITE).
+Furthermore, the larger the sample size, the smaller is the standard error, which means a more precise estimate of the population mean (CITE).
+In m2, the larger sample size leads to a smaller standard error (0.4774), which reduces the uncertainty around the estimate and increases the power of the test to detect differences.
+The t-value is influenced by both the estimate and the standard error.
+Even if the estimates are somewhat similar, the smaller standard error in m2 results in a larger t-value, making it more likely to detect i significent effect.
+Additionally, the p-value depends on the t-value.
+With a larger sample size, as in m2, the t-value is typically larger, leading to a smaller p-value.
+This means that m2 is more likely to detect significant differences than m1, where the small samlpe size leads to a higher p-value and lower statistical power.
+In conclusion, the larger sample size in m2 leads to a more precise estimate, a smaller standard error, a higher t-value, and ultimately a smaller p-value, increasing the likelihood of detecting a significant difference between the treatments.
+
+## 3. Why do we use the shaded area in the lower and upper tail of the t-distribution (See Figure @ref(fig:t-dist-fig)). MORE/CHANGE
+
+The shaded area in the lower and upper tail of the t-distribution represents the probability of observing extreme values (both high and low) of the t-value under the null hypothesis.
+This area helps us determine the p-value, which tells us how likely it is that our observed data could occur by random chance if the null hypothesis is true.
+Here's why both tails are important:
+
+Two-tailed test:
+
+In hypothesis testing, particularly in a two-sided or two-tailed t-test (which is common in regression models), we are interested in whether the observed estimate is either significantly higher or lower than the null hypothesis value.
+Therefore, we shade both the lower and upper tails of the t-distribution to account for extreme values in both directions.
+
+Symmetry of the t-distribution: The t-distribution is symmetric, meaning extreme values can occur in either the positive or negative direction.
+By considering both tails, we ensure we’re capturing the total probability of observing an extreme result in either direction.
+
+p-value calculation: The total shaded area in both tails represents the combined probability of observing a t-value as extreme as the one calculated, assuming the null hypothesis is true.
+For a p-value of 0.05, 5% of the area is in the combined tails (2.5% in each tail), representing the threshold for statistical significance.
+
+In summary, we use both tails to determine whether the sample mean is significantly different from the null hypothesis in either direction, ensuring we capture the total range of possible extreme outcomes.
+
+We then performed 1000 studies and saved the results from each study.
+This made it possible for us to get an actual sampling distribution.
+
+```{r}
+# Create data frames to store the model estimates
+results_8 <- data.frame(estimate = rep(NA, 1000), 
+                      se = rep(NA, 1000), 
+                      pval = rep(NA, 1000), 
+                      n = 8)  
+
+results_40 <- data.frame(estimate = rep(NA, 1000), 
+                      se = rep(NA, 1000), 
+                      pval = rep(NA, 1000), 
+                      n = 40)
+
+# A for loop used to sample 1000 studies, each iteration (i) will draw a new sample
+# from the population. 
+
+for(i in 1:1000) {
+  
+  # Draw a sample 
+  samp1 <- data.frame(y = sample(population, 8, replace = FALSE))
+  samp2 <- data.frame(y = sample(population, 40, replace = FALSE))
+
+  # Model the data
+  m1 <- lm(y ~ 1, data = samp1)
+  m2 <- lm(y ~ 1, data = samp2)
+  
+  # Extract values from the models
+  results_8[i, 1] <- coef(summary(m1))[1, 1]
+  results_8[i, 2] <- coef(summary(m1))[1, 2]
+  results_8[i, 3] <- coef(summary(m1))[1, 4]
+
+  results_40[i, 1] <- coef(summary(m2))[1, 1]
+  results_40[i, 2] <- coef(summary(m2))[1, 2]
+  results_40[i, 3] <- coef(summary(m2))[1, 4]
+  
+  
+}
+
+
+# Save the results in a combined data frame
+
+results <- bind_rows(results_8, results_40)
+results
+
+
+```
+
+## 4. Calculate the standard deviation of the estimate variable, and the average of the se variable for each of the study sample sizes (8 and 40). Explain why these numbers are very similar. How can you define the Standard Error (SE) in light of these calculations?
+
+```{r}
+
+# Calculate the standard deviation of the estimate variable for sample size 8 and 40
+sd_estimate_8 <- sd(results_8$estimate)
+sd_estimate_40 <- sd(results_40$estimate)
+
+sd_estimate_8 
+sd_estimate_40
+
+# Calculate the average of the SE variable for sample size 8 and 40
+avg_se_8 <- mean(results_8$se)
+avg_se_40 <- mean(results_40$se)
+
+avg_se_8
+avg_se_40
+
+```
+
+By calculating the standard deviation of the estimates across the 1000 studies we get a measure of how much the sample means fluctuate between different samples of the same size.
+For the smaller sample size of 8, the standard deviation comes out to be `sd_estimate_8`, while for the bigger sample size of 40 it comes out to be `sd_estimate_40`.
+Furthermore, the average standard error represents the average uncertainty of the sample mean estimate in each study.
+It reflects the variability in the sample means and depends on the sample size.
+The average standard error for the smaller sample size is `avg_se_8` and `avg_se_40` for the bigger sample size.
+Why are these numbers similar?
+The standard deviation of the estimates and the average standard error are conceptually related, as the standard error estimates how much the sample mean might vary from the population mean.
+They are both measures of variability, but while standard error (SE) is an estimate based on the sample, the standard deviation of the estimates shows the actual observed variation across multiple studies.
+Therfore, in light of these calculations, we can define standard error (SE) as the expected variability from sample to sample.
+
+*(The Standard Error (SE) provides an estimate of how much variability we expect in the sample mean if we repeated the study many times. The similarity between the SD of the estimates and the average SE supports this: both measure the spread of the mean values, with the SE being the expected variability from sample to sample)*
+
+## 5. Create a histogram (see example code below) of the p-values from each study sample-size. How do you interpret these histograms, what do they tell you about the effect of sample size on statistical power?
+
+```{r}
+
+# A two facets histogram can be created with ggplot2
+results %>%
+  ggplot(aes(pval)) + 
+  geom_histogram() +
+  facet_wrap(~ n)
+
+```
+For sample size 8, the p-values are more spread out, with many values above the significance threshold of 0.05. This indicates that with a smaller sample, there is lower statistical power, and many studies fail to detect a statistically significant difference.
+For sample size 40, the p-values are more concentrated towards lower values, indicating that a larger sample size increases the likelihood of detecting significant effects (more p-values are below 0.05). This reflects increased statistical power with larger sample sizes, meaning the test is more likely to reject the null hypothesis when a true effect exists.
+
+
+
+## 6. Calculate the number of studies from each sample size that declare a statistical significant effect (specify a threshold for your significance level).
+```{r}
+
+# Count the proportion of tests below a certain p-value for each 
+results %>%
+  filter(pval < 0.05) %>%
+  group_by(n) %>%
+  summarise(sig_results = n()/1000)
+
+```
+Sample size 8: Fewer studies are likely to reach statistical significance because of the low statistical power associated with small samples.
+Sample size 40: More studies will show a significant effect due to the higher power of larger samples, making it easier to detect true differences.
+
+
+
+## 7. Using the pwr package, calculate the power of a one-sample t-test, with a effect size of 1.5/3, your specified significance level and sample sizes 8 and 40. Explain the results in the light of your simulations.
+```{r}
+
+# Using the pwr package
+library(pwr)
+
+pwr.t.test(n = 40, sig.level = 0.05, d = 1.5/3, type = "one.sample")
+```
+
+
+We will now simulate a population without differences between treatment and control.
+The code below is very similar to the one we use above, except that we use an average effect of 0 in the population.
+
+```{r}
+
+population <- rnorm(1000000, mean = 0, sd = 3)
+
+
+# Create data frames to store the model estimates
+results_8 <- data.frame(estimate = rep(NA, 1000), 
+                      se = rep(NA, 1000), 
+                      pval = rep(NA, 1000), 
+                      n = 8)  
+
+results_40 <- data.frame(estimate = rep(NA, 1000), 
+                      se = rep(NA, 1000), 
+                      pval = rep(NA, 1000), 
+                      n = 40)
+
+# A for loop used to sample 1000 studies, each iteration (i) will draw a new sample
+# from the population. 
+
+for(i in 1:1000) {
+  
+  # Draw a sample 
+  samp1 <- data.frame(y = sample(population, 8, replace = FALSE))
+  samp2 <- data.frame(y = sample(population, 40, replace = FALSE))
+
+  # Model the data
+  m1 <- lm(y ~ 1, data = samp1)
+  m2 <- lm(y ~ 1, data = samp2)
+  
+  # Extract values from the models
+  results_8[i, 1] <- coef(summary(m1))[1, 1]
+  results_8[i, 2] <- coef(summary(m1))[1, 2]
+  results_8[i, 3] <- coef(summary(m1))[1, 4]
+
+  results_40[i, 1] <- coef(summary(m2))[1, 1]
+  results_40[i, 2] <- coef(summary(m2))[1, 2]
+  results_40[i, 3] <- coef(summary(m2))[1, 4]
+  
+  
+}
+
+
+# Save the results in a combined data frame
+
+results_null <- bind_rows(results_8, results_40)
+```
+
+Using the new data frame with results from studies of a population with an average effect of zero, create new histograms.
+
+## 8. With a significance level of 5%, how many studies would give you a “false positive” result if you did many repeated studies?

@@ -1,27 +1,28 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
 
 # Assignment 1: Reliability and tools for reproducible data science {#assignment1}
 
-The purpose of this assignment is to present estimates of reliability of measures collected in the physiology lab. A second purpose is to use tools for reproducible data science. The report that you are expected to hand in therefore has some strict requirements in its format (see [assignment description](https://dhammarstrom.github.io/quant-methods-workshops/assignment-1.html)). The assignment is a group assignment and at least three students are expected to contribute to each report.
+The purpose of this assignment is to present estimates of reliability of measures collected in the physiology lab at Inland Norway University of Applied Sciences. The data is gathered from multiple VO2max tests, where 16 participants performed two till four tests in the time span of 3 weeks. The first two tests were performed within 24 hours of each other during the first week. The last two tests were performed within 48 hours of each other during the third week. We have used Rstudio to analyze the data and to estimate if the performed tests were reliable.
 
-## Elements of the report
+## Method
 
-**Importantly, the report should contain:**
+### Standardization pre-test
 
-- At least one table (created from your data)
-- At least one figure (created from your data), and
-- data presented in the text.
-- The report should use a bibliography file to manage references.
+Same workout regime two days before test day.
 
+Food intake and hydration + caffeine - last two meals should be the same
 
-# Reliabilitet og verktøy for å reprodusere data
+sleep - same sleeping schedule
 
-Hensikten med denne rapporten er å presentere estimater for reliabilitet av data samlet i fysiologisk testlab ved Høgskolen i Innlandet. Vi har gjennomført VO2max tester på sykkel der 16 deltakere har gjennomført 2 eller 4 tester i løpet av tre uker. De to første testene ble gjennomført med ca. 24 timers mellomrom i uke en. De to siste testene ble gjennomført med ca. 48 timers mellomrom i uke tre. Vi har brukt Rstudio for å analysere dataen og få svar på om våre tester er reliable.
+same test time for each test
 
-## Standardisering før test
+[@halperin2015].
 
-Deltakerne ble instruert om å ikke trene dagen før test. Næringsinntaket, her også koffein og væske, de to siste måltidene skulle være likt før hver test. Deltakerne ble også bedt om å tilstrebe lik døgnrytme. Alle deltakerne hadde samme testtidspunkt hver testdag [@halperin2015].
-
-## Protokoll
+### Protocol
 
 -       Forbrede plotteark (heime)
 
@@ -93,14 +94,6 @@ Deltakerne ble instruert om å ikke trene dagen før test. Næringsinntaket, her
 
 -       Sette biosen i stand by om vi er siste igjen i labben
 
-**Standardisering mellom testene**
-
--       De to siste måltidene før test like
-
--       Lik trening dagene i forkant av testdag
-
--       Drikke like mye
-
 ```{r}
 #| echo: false
 #| warning: false
@@ -141,7 +134,9 @@ read_excel("g4.xlsx") %>%
 
 ```
 
-## Figur 1
+## Results
+
+### Figur 1
 
 ```{r}
 #| echo: false
@@ -149,10 +144,10 @@ read_excel("g4.xlsx") %>%
 
 library(ggplot2)
   ggplot(data = dat, aes(x = id , y = vo2.max, color = timepoint)) + geom_point() + geom_smooth() +
-    labs(x = "deltaker",
+    labs(x = "participant",
          y = "VO2.max (ml/min)",
          title = "VO2.max per deltaker per test",
-         color = "test tidspunkt") +
+         color = "timepoint") +
      scale_x_discrete(guide = guide_axis(n.dodge=3))
   
 
@@ -161,7 +156,7 @@ library(ggplot2)
 
 Figur 1 viser det absolutte maksimale oksygenopptaket til hver enkelt deltaker, sammenlignet med alle testene som ble gjennomført til alle deltakerne.
 
-## Tabell 1
+### Tabell 1
 
 ```{r}
 #| echo: false
@@ -182,7 +177,7 @@ dat %>%
 
 Tabell 1 viser det samme som "Figur 1", men her kan man lettere se hvor mange tester hver enkelt deltaker har gjennomført og hvilket resultat som hører til hvilken test.
 
-## Beregning av standardfeil mellom test 1 og test 2
+### Beregning av standardfeil mellom test 1 og test 2
 
 ```{r}
 #| echo: false
@@ -207,9 +202,7 @@ cv_percent1 <- round(cv1$cv,2)
 
 ```
 
-
-
-## Beregning av standardfeil mellom test 3 og test 4
+### Beregning av standardfeil mellom test 3 og test 4
 
 ```{r}
 #| echo: false
@@ -233,8 +226,12 @@ cv_percent2 <- round(cv2$cv,1)
 
 ```
 
-## Resultat
+We calculated that the
 
 Vi kalkulerte at variasjonskoeffisienten (CV) for test 1 og test 2 ble `r cv_percent1`%. I følge Dr. Will G. Hopkins indikerer en variasjonskoeffisient (CV) på under 5% god reliabilitet [@hopkins2000a]. Det vil si at resultatene for test 1 og test 2 har relativt lav variabilitet og bør betraktes som reliable. For test 3 og test 4 kalkulerte vi at variasjonskoeffisienten (CV) ble `r cv_percent2`%. Det vil si at også resultatene for test 3 og test 4 kan betraktes som reliable, men har mer variabilitet enn resultatene fra test 1 og test 2 da variasjonskoeffisienten er noe høyere.
 
+## Discussion
 
+### Deviance (avvik?)
+
+## Conclusion
