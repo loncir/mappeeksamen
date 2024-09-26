@@ -187,12 +187,14 @@ results %>%
   facet_wrap(~ n)
 
 ```
-For sample size 8, the p-values are more spread out, with many values above the significance threshold of 0.05. This indicates that with a smaller sample, there is lower statistical power, and many studies fail to detect a statistically significant difference.
-For sample size 40, the p-values are more concentrated towards lower values, indicating that a larger sample size increases the likelihood of detecting significant effects (more p-values are below 0.05). This reflects increased statistical power with larger sample sizes, meaning the test is more likely to reject the null hypothesis when a true effect exists.
 
-
+For sample size 8, the p-values are more spread out, with many values above the significance threshold of 0.05.
+This indicates that with a smaller sample, there is lower statistical power, and many studies fail to detect a statistically significant difference.
+For sample size 40, the p-values are more concentrated towards lower values, indicating that a larger sample size increases the likelihood of detecting significant effects (more p-values are below 0.05).
+This reflects increased statistical power with larger sample sizes, meaning the test is more likely to reject the null hypothesis when a true effect exists.
 
 ## 6. Calculate the number of studies from each sample size that declare a statistical significant effect (specify a threshold for your significance level).
+
 ```{r}
 
 # Count the proportion of tests below a certain p-value for each 
@@ -202,19 +204,27 @@ results %>%
   summarise(sig_results = n()/1000)
 
 ```
-Sample size 8: Fewer studies are likely to reach statistical significance because of the low statistical power associated with small samples.
-Sample size 40: More studies will show a significant effect due to the higher power of larger samples, making it easier to detect true differences.
 
-
+When calculating the number of studies that declare a statistical significant effect we find that fewer studies (0.227) are likely to reach statistical significance in the samle size of 8.
+This is because of the low statistical power associated with small samples.
+In the sample size of 40, more studies (0.865) will show a significant effect due to the higher power of larger samples, making it easier to detect true differences.
 
 ## 7. Using the pwr package, calculate the power of a one-sample t-test, with a effect size of 1.5/3, your specified significance level and sample sizes 8 and 40. Explain the results in the light of your simulations.
+FORMULA
+
 ```{r}
 
 # Using the pwr package
 library(pwr)
 
+pwr.t.test(n = 8, sig.level = 0.05, d = 1.5/3, type = "one.sample")
 pwr.t.test(n = 40, sig.level = 0.05, d = 1.5/3, type = "one.sample")
 ```
+
+To calculate the power of a one-sample t-test, we use the effect size 𝑑 = 𝜇/𝜎, where 𝜇 = 1.5 (mean) and σ=3 (standard deviation).
+The effect size 𝑑 = 1.5/3 = 0.5.
+For a sample size of 8 we find that the power will be relatively low, 0.232077, reflecting that with smaller samples, we have a lower chance of detecting a true effect when it exists. This corresponds to fewer studies achieving significance in the simulation.
+For a sample size of 40 we find that the power will be much higher, 0.8693981, indicating that with a larger sample size, we have a higher chance of detecting a true effect. This explains why more studies with sample size 40 declare significance in the simulation.
 
 
 We will now simulate a population without differences between treatment and control.
@@ -265,8 +275,33 @@ for(i in 1:1000) {
 # Save the results in a combined data frame
 
 results_null <- bind_rows(results_8, results_40)
+
+#create new histogram 
+
+results_null %>%
+  ggplot(aes(pval)) + 
+  geom_histogram() +
+  facet_wrap(~ n)
+  
 ```
 
 Using the new data frame with results from studies of a population with an average effect of zero, create new histograms.
 
 ## 8. With a significance level of 5%, how many studies would give you a “false positive” result if you did many repeated studies?
+
+```{r}
+
+# Count number of false positives for sample size 8 (p-value < 0.05)
+false_positives_8 <- sum(results_8$pval < 0.05)
+
+# Count number of false positives for sample size 40 (p-value < 0.05)
+false_positives_40 <- sum(results_40$pval < 0.05)
+
+false_positives_8
+false_positives_40
+
+```
+To determine how many studies would give a "false positive" result with a significance level of 5%, we calculate how many studies produce a p-value less than 0.05 in this simulation.
+Since the population mean is set to 0 any p-value below 0.05 in this scenario would represent a false positive. For the sample size of 8 we got `false_positives_8` while for the sample size of 40 we got `false_positive_40`. With a significance level of 5%, we expect roughly 5% of the 1000 studies to produce p-values below 0.05 due to random variation, even though the null hypothesis is true. For 1000 studies, this means we expect around 50 false positive results for each sample size. The actual number of false positives may vary slightly due to the randomness in the simulation but should be close to 50 for each sample size (8 and 40).
+
+
