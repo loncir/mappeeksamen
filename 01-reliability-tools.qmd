@@ -2,6 +2,7 @@
 output: html_document
 editor_options: 
   chunk_output_type: console
+  bibliography: bibliography.bib
 ---
 
 # Assignment 1: Reliability and tools for reproducible data science {#assignment1}
@@ -24,75 +25,13 @@ same test time for each test
 
 ### Protocol
 
--       Forbrede plotteark (heime)
 
--       Ta på labfrakk
 
--       Skru på biosen, sjekk standardvæske
 
--       Åpne gass, sjekk at trippel v, står i vyntus, start kalibrering gass på vyntus, sett sammen munnstykke og gjøre klar slange (slange festes til munnstykke på sykkel og til miksekammeret) mens kalibrering pågår (bruk hansker og fest papir på med neseklypa).
 
--       Kalibrer volum
 
--       Sjekke krankarm på sykkel (172,5cm) og riktig pedaltype
 
--       Sette krankarmen rett opp og kalibrere sykkel
 
--       Logg på onedrive-skolekontoen, gjør klart plotteskjema
-
--       Finn frem laktatutstyr. Rør(+ekstra) teip og papir
-
--       Ta imot og måle vekta på utøver
-
--       Legg til info om ny person på vyntus: idr4000_h24_g3_test(x), vekt, høyde, kjønn, fødselsdato, eller bruke eksisterande bruker om det er registret frå før og endre vekta
-
--       Legg til info om ny person på lode-pcn: idr4000_h24_g3_test(x), vekt, høyde, kjønn, fødselsdato, eller bruke eksisterende bruker om det er registrert før
-
--       Stille sykkel så det ser bra ut og er behagelig for utøver
-
--       Gi litt watt til utøver for oppvarming (10-13 på borg skala i 5min)
-
--       Skru på vifte om deltaker ønsker
-
--       Gå inn på måling, sjekke at det står medium på munnstykke, 30sek målinger, pulsbeltet koblet til.
-
--       Informere om at testen kommer til å foregå trappetrinsvis ved økninger i watt per min (20w for damer og 25w for menn) og at målet skal vere å sykle til det ikkje går lenger, at det blir målinger hvert 30sek og at man skal sitte gjennom hele testen, og forklare borg skala
-
--       Gå fra check phase til test phase i vyntus
-
--       Starte testen ved å trykke på klokka og sykkel pc etter 1min er gått i vyntus
-
--       Informere om økninger og målinger underveis i testen
-
--       Motivere og pushe
-
--       Se på tid, watt og makspuls ved slutten av testen, spørre etter borg – notere ned i plotteark
-
--       Ta laktat 1 min etter utøver ga seg
-
--       Måle laktat i biosen og plotte inn i plotteark
-
--       Passe på at det går bra med utøver
-
--       Stoppe test i vyntus
-
--       Lagre data på sykkel-pc
-
--       Vaske rør, munnstykke og sykkel
-
--       Bruke vifta til å tørke miksekammeret
-
--       Plotte verdier fra vyntus
-
--       Lagre vyntusfil i minnepenn og over i onedrive på lab pc
-
--       Bytte fra minnepenn til bluetooth-kobleren til pulsbeltet
-
--       Lagre plotteskjema
-
--       Ta ut av cidex
-
--       Sette biosen i stand by om vi er siste igjen i labben
 
 ```{r}
 #| echo: false
@@ -146,7 +85,7 @@ library(ggplot2)
   ggplot(data = dat, aes(x = id , y = vo2.max, color = timepoint)) + geom_point() + geom_smooth() +
     labs(x = "participant",
          y = "VO2.max (ml/min)",
-         title = "VO2.max per deltaker per test",
+         title = "VO2.max per participant per test",
          color = "timepoint") +
      scale_x_discrete(guide = guide_axis(n.dodge=3))
   
@@ -176,6 +115,54 @@ dat %>%
 ```
 
 Tabell 1 viser det samme som "Figur 1", men her kan man lettere se hvor mange tester hver enkelt deltaker har gjennomført og hvilket resultat som hører til hvilken test.
+
+### Tabellen eg skal bruke 
+```{r}
+
+library(dplyr)
+library(tidyr)
+library(gt)
+
+# Reshape data and calculate differences between timepoints
+dat_wide <- dat %>%
+  select(id, timepoint, vo2.max) %>%
+  pivot_wider(names_from = timepoint, values_from = vo2.max) %>%
+  mutate(Diff_T2_T1 = `t2` - `t1`,
+         Diff_T4_T3 = `t4` - `t3`) 
+
+# Create summary table with n for each timepoint
+n_summary <- dat %>%
+  group_by(timepoint) %>%
+  summarise(n = n())
+
+# Generate table with gt
+dat_wide %>%
+  gt() %>%
+  tab_header(
+    title = "VO2max per Participant per Timepoint"
+  ) %>%
+  cols_label(
+    id = "Participant ID",
+    `t1` = "Test 1",
+    `t2` = "Test 2",
+    `t3` = "Test 3",
+    `t4` = "Test 4",
+    Diff_T2_T1 = "Difference (T2 - T1)",
+    Diff_T4_T3 = "Difference (T4 - T3)"
+  ) %>%
+  fmt_number(
+    columns = everything(),
+    decimals = 2
+  ) %>%
+  tab_footnote(
+    footnote = paste("Sample sizes: t1 = ", n_summary$n[1], 
+                     ", t2 = ", n_summary$n[2], 
+                     ", t3 = ", n_summary$n[3], 
+                     ", t4 = ", n_summary$n[4])
+  )
+
+```
+
 
 ### Beregning av standardfeil mellom test 1 og test 2
 

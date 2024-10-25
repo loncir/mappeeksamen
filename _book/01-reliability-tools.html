@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -127,7 +161,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-statistical-inference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Assignment 3: Drawing inference from statistical models, and statistical power</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Drawing inference from statistical models, and statistical power</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -179,8 +213,9 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#figur-1" id="toc-figur-1" class="nav-link" data-scroll-target="#figur-1"><span class="header-section-number">1.2.1</span> Figur 1</a></li>
   <li><a href="#tabell-1" id="toc-tabell-1" class="nav-link" data-scroll-target="#tabell-1"><span class="header-section-number">1.2.2</span> Tabell 1</a></li>
-  <li><a href="#beregning-av-standardfeil-mellom-test-1-og-test-2" id="toc-beregning-av-standardfeil-mellom-test-1-og-test-2" class="nav-link" data-scroll-target="#beregning-av-standardfeil-mellom-test-1-og-test-2"><span class="header-section-number">1.2.3</span> Beregning av standardfeil mellom test 1 og test 2</a></li>
-  <li><a href="#beregning-av-standardfeil-mellom-test-3-og-test-4" id="toc-beregning-av-standardfeil-mellom-test-3-og-test-4" class="nav-link" data-scroll-target="#beregning-av-standardfeil-mellom-test-3-og-test-4"><span class="header-section-number">1.2.4</span> Beregning av standardfeil mellom test 3 og test 4</a></li>
+  <li><a href="#tabellen-eg-skal-bruke" id="toc-tabellen-eg-skal-bruke" class="nav-link" data-scroll-target="#tabellen-eg-skal-bruke"><span class="header-section-number">1.2.3</span> Tabellen eg skal bruke</a></li>
+  <li><a href="#beregning-av-standardfeil-mellom-test-1-og-test-2" id="toc-beregning-av-standardfeil-mellom-test-1-og-test-2" class="nav-link" data-scroll-target="#beregning-av-standardfeil-mellom-test-1-og-test-2"><span class="header-section-number">1.2.4</span> Beregning av standardfeil mellom test 1 og test 2</a></li>
+  <li><a href="#beregning-av-standardfeil-mellom-test-3-og-test-4" id="toc-beregning-av-standardfeil-mellom-test-3-og-test-4" class="nav-link" data-scroll-target="#beregning-av-standardfeil-mellom-test-3-og-test-4"><span class="header-section-number">1.2.5</span> Beregning av standardfeil mellom test 3 og test 4</a></li>
   </ul></li>
   <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion"><span class="header-section-number">1.3</span> Discussion</a>
   <ul class="collapse">
@@ -225,41 +260,6 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="protocol" class="level3" data-number="1.1.2">
 <h3 data-number="1.1.2" class="anchored" data-anchor-id="protocol"><span class="header-section-number">1.1.2</span> Protocol</h3>
-<p>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Forbrede plotteark (heime)</p>
-<p>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ta på labfrakk</p>
-<p>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Skru på biosen, sjekk standardvæske</p>
-<p>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Åpne gass, sjekk at trippel v, står i vyntus, start kalibrering gass på vyntus, sett sammen munnstykke og gjøre klar slange (slange festes til munnstykke på sykkel og til miksekammeret) mens kalibrering pågår (bruk hansker og fest papir på med neseklypa).</p>
-<p>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Kalibrer volum</p>
-<p>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sjekke krankarm på sykkel (172,5cm) og riktig pedaltype</p>
-<p>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sette krankarmen rett opp og kalibrere sykkel</p>
-<p>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Logg på onedrive-skolekontoen, gjør klart plotteskjema</p>
-<p>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Finn frem laktatutstyr. Rør(+ekstra) teip og papir</p>
-<p>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ta imot og måle vekta på utøver</p>
-<p>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Legg til info om ny person på vyntus: idr4000_h24_g3_test(x), vekt, høyde, kjønn, fødselsdato, eller bruke eksisterande bruker om det er registret frå før og endre vekta</p>
-<p>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Legg til info om ny person på lode-pcn: idr4000_h24_g3_test(x), vekt, høyde, kjønn, fødselsdato, eller bruke eksisterende bruker om det er registrert før</p>
-<p>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Stille sykkel så det ser bra ut og er behagelig for utøver</p>
-<p>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Gi litt watt til utøver for oppvarming (10-13 på borg skala i 5min)</p>
-<p>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Skru på vifte om deltaker ønsker</p>
-<p>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Gå inn på måling, sjekke at det står medium på munnstykke, 30sek målinger, pulsbeltet koblet til.</p>
-<p>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Informere om at testen kommer til å foregå trappetrinsvis ved økninger i watt per min (20w for damer og 25w for menn) og at målet skal vere å sykle til det ikkje går lenger, at det blir målinger hvert 30sek og at man skal sitte gjennom hele testen, og forklare borg skala</p>
-<p>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Gå fra check phase til test phase i vyntus</p>
-<p>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Starte testen ved å trykke på klokka og sykkel pc etter 1min er gått i vyntus</p>
-<p>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Informere om økninger og målinger underveis i testen</p>
-<p>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Motivere og pushe</p>
-<p>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Se på tid, watt og makspuls ved slutten av testen, spørre etter borg – notere ned i plotteark</p>
-<p>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ta laktat 1 min etter utøver ga seg</p>
-<p>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Måle laktat i biosen og plotte inn i plotteark</p>
-<p>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Passe på at det går bra med utøver</p>
-<p>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Stoppe test i vyntus</p>
-<p>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Lagre data på sykkel-pc</p>
-<p>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Vaske rør, munnstykke og sykkel</p>
-<p>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bruke vifta til å tørke miksekammeret</p>
-<p>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Plotte verdier fra vyntus</p>
-<p>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Lagre vyntusfil i minnepenn og over i onedrive på lab pc</p>
-<p>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bytte fra minnepenn til bluetooth-kobleren til pulsbeltet</p>
-<p>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Lagre plotteskjema</p>
-<p>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ta ut av cidex</p>
-<p>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sette biosen i stand by om vi er siste igjen i labben</p>
 </section>
 </section>
 <section id="results" class="level2" data-number="1.2">
@@ -281,23 +281,23 @@ ul.task-list li input[type="checkbox"] {
 <h3 data-number="1.2.2" class="anchored" data-anchor-id="tabell-1"><span class="header-section-number">1.2.2</span> Tabell 1</h3>
 <div class="cell">
 <div class="cell-output-display">
-<div id="dsohtcjjln" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#dsohtcjjln table {
+<div id="gmhvogksfs" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#gmhvogksfs table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#dsohtcjjln thead, #dsohtcjjln tbody, #dsohtcjjln tfoot, #dsohtcjjln tr, #dsohtcjjln td, #dsohtcjjln th {
+#gmhvogksfs thead, #gmhvogksfs tbody, #gmhvogksfs tfoot, #gmhvogksfs tr, #gmhvogksfs td, #gmhvogksfs th {
   border-style: none;
 }
 
-#dsohtcjjln p {
+#gmhvogksfs p {
   margin: 0;
   padding: 0;
 }
 
-#dsohtcjjln .gt_table {
+#gmhvogksfs .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -323,12 +323,12 @@ ul.task-list li input[type="checkbox"] {
   border-left-color: #D3D3D3;
 }
 
-#dsohtcjjln .gt_caption {
+#gmhvogksfs .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#dsohtcjjln .gt_title {
+#gmhvogksfs .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -340,7 +340,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-width: 0;
 }
 
-#dsohtcjjln .gt_subtitle {
+#gmhvogksfs .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -352,7 +352,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-width: 0;
 }
 
-#dsohtcjjln .gt_heading {
+#gmhvogksfs .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -364,13 +364,13 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#dsohtcjjln .gt_bottom_border {
+#gmhvogksfs .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#dsohtcjjln .gt_col_headings {
+#gmhvogksfs .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -385,7 +385,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#dsohtcjjln .gt_col_heading {
+#gmhvogksfs .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -405,7 +405,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#dsohtcjjln .gt_column_spanner_outer {
+#gmhvogksfs .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -417,15 +417,15 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 4px;
 }
 
-#dsohtcjjln .gt_column_spanner_outer:first-child {
+#gmhvogksfs .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#dsohtcjjln .gt_column_spanner_outer:last-child {
+#gmhvogksfs .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#dsohtcjjln .gt_column_spanner {
+#gmhvogksfs .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -437,11 +437,11 @@ ul.task-list li input[type="checkbox"] {
   width: 100%;
 }
 
-#dsohtcjjln .gt_spanner_row {
+#gmhvogksfs .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#dsohtcjjln .gt_group_heading {
+#gmhvogksfs .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -467,7 +467,7 @@ ul.task-list li input[type="checkbox"] {
   text-align: left;
 }
 
-#dsohtcjjln .gt_empty_group_heading {
+#gmhvogksfs .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -482,15 +482,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 
-#dsohtcjjln .gt_from_md > :first-child {
+#gmhvogksfs .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#dsohtcjjln .gt_from_md > :last-child {
+#gmhvogksfs .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#dsohtcjjln .gt_row {
+#gmhvogksfs .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -509,7 +509,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#dsohtcjjln .gt_stub {
+#gmhvogksfs .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -522,7 +522,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#dsohtcjjln .gt_stub_row_group {
+#gmhvogksfs .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -536,15 +536,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: top;
 }
 
-#dsohtcjjln .gt_row_group_first td {
+#gmhvogksfs .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#dsohtcjjln .gt_row_group_first th {
+#gmhvogksfs .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#dsohtcjjln .gt_summary_row {
+#gmhvogksfs .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -554,16 +554,16 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#dsohtcjjln .gt_first_summary_row {
+#gmhvogksfs .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#dsohtcjjln .gt_first_summary_row.thick {
+#gmhvogksfs .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#dsohtcjjln .gt_last_summary_row {
+#gmhvogksfs .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -573,7 +573,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#dsohtcjjln .gt_grand_summary_row {
+#gmhvogksfs .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -583,7 +583,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#dsohtcjjln .gt_first_grand_summary_row {
+#gmhvogksfs .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -593,7 +593,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-color: #D3D3D3;
 }
 
-#dsohtcjjln .gt_last_grand_summary_row_top {
+#gmhvogksfs .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -603,11 +603,11 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#dsohtcjjln .gt_striped {
+#gmhvogksfs .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#dsohtcjjln .gt_table_body {
+#gmhvogksfs .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -616,7 +616,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#dsohtcjjln .gt_footnotes {
+#gmhvogksfs .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -630,7 +630,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#dsohtcjjln .gt_footnote {
+#gmhvogksfs .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -639,7 +639,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#dsohtcjjln .gt_sourcenotes {
+#gmhvogksfs .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -653,7 +653,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#dsohtcjjln .gt_sourcenote {
+#gmhvogksfs .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -661,72 +661,72 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#dsohtcjjln .gt_left {
+#gmhvogksfs .gt_left {
   text-align: left;
 }
 
-#dsohtcjjln .gt_center {
+#gmhvogksfs .gt_center {
   text-align: center;
 }
 
-#dsohtcjjln .gt_right {
+#gmhvogksfs .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#dsohtcjjln .gt_font_normal {
+#gmhvogksfs .gt_font_normal {
   font-weight: normal;
 }
 
-#dsohtcjjln .gt_font_bold {
+#gmhvogksfs .gt_font_bold {
   font-weight: bold;
 }
 
-#dsohtcjjln .gt_font_italic {
+#gmhvogksfs .gt_font_italic {
   font-style: italic;
 }
 
-#dsohtcjjln .gt_super {
+#gmhvogksfs .gt_super {
   font-size: 65%;
 }
 
-#dsohtcjjln .gt_footnote_marks {
+#gmhvogksfs .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#dsohtcjjln .gt_asterisk {
+#gmhvogksfs .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#dsohtcjjln .gt_indent_1 {
+#gmhvogksfs .gt_indent_1 {
   text-indent: 5px;
 }
 
-#dsohtcjjln .gt_indent_2 {
+#gmhvogksfs .gt_indent_2 {
   text-indent: 10px;
 }
 
-#dsohtcjjln .gt_indent_3 {
+#gmhvogksfs .gt_indent_3 {
   text-indent: 15px;
 }
 
-#dsohtcjjln .gt_indent_4 {
+#gmhvogksfs .gt_indent_4 {
   text-indent: 20px;
 }
 
-#dsohtcjjln .gt_indent_5 {
+#gmhvogksfs .gt_indent_5 {
   text-indent: 25px;
 }
 
-#dsohtcjjln .katex-display {
+#gmhvogksfs .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#dsohtcjjln div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#gmhvogksfs div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -862,27 +862,68 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <p>Tabell 1 viser det samme som “Figur 1”, men her kan man lettere se hvor mange tester hver enkelt deltaker har gjennomført og hvilket resultat som hører til hvilken test.</p>
 </section>
-<section id="beregning-av-standardfeil-mellom-test-1-og-test-2" class="level3" data-number="1.2.3">
-<h3 data-number="1.2.3" class="anchored" data-anchor-id="beregning-av-standardfeil-mellom-test-1-og-test-2"><span class="header-section-number">1.2.3</span> Beregning av standardfeil mellom test 1 og test 2</h3>
+<section id="tabellen-eg-skal-bruke" class="level3" data-number="1.2.3">
+<h3 data-number="1.2.3" class="anchored" data-anchor-id="tabellen-eg-skal-bruke"><span class="header-section-number">1.2.3</span> Tabellen eg skal bruke</h3>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Reshape data and calculate differences between timepoints</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>dat_wide <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, timepoint, vo2.max) <span class="sc">%&gt;%</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> timepoint, <span class="at">values_from =</span> vo2.max) <span class="sc">%&gt;%</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Diff_T2_T1 =</span> <span class="st">`</span><span class="at">t2</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">t1</span><span class="st">`</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">Diff_T4_T3 =</span> <span class="st">`</span><span class="at">t4</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">t3</span><span class="st">`</span>) </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Create summary table with n for each timepoint</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>n_summary <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(timepoint) <span class="sc">%&gt;%</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>())</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate table with gt</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>dat_wide <span class="sc">%&gt;%</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"VO2max per Participant per Timepoint"</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">id =</span> <span class="st">"Participant ID"</span>,</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">t1</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Test 1"</span>,</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">t2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Test 2"</span>,</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">t3</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Test 3"</span>,</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">t4</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Test 4"</span>,</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">Diff_T2_T1 =</span> <span class="st">"Difference (T2 - T1)"</span>,</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">Diff_T4_T3 =</span> <span class="st">"Difference (T4 - T3)"</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="fu">everything</span>(),</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">decimals =</span> <span class="dv">2</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_footnote</span>(</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">footnote =</span> <span class="fu">paste</span>(<span class="st">"Sample sizes: t1 = "</span>, n_summary<span class="sc">$</span>n[<span class="dv">1</span>], </span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>                     <span class="st">", t2 = "</span>, n_summary<span class="sc">$</span>n[<span class="dv">2</span>], </span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>                     <span class="st">", t3 = "</span>, n_summary<span class="sc">$</span>n[<span class="dv">3</span>], </span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>                     <span class="st">", t4 = "</span>, n_summary<span class="sc">$</span>n[<span class="dv">4</span>])</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="qtcqsxpflf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#qtcqsxpflf table {
+<div id="qegouqwehx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#qegouqwehx table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#qtcqsxpflf thead, #qtcqsxpflf tbody, #qtcqsxpflf tfoot, #qtcqsxpflf tr, #qtcqsxpflf td, #qtcqsxpflf th {
+#qegouqwehx thead, #qegouqwehx tbody, #qegouqwehx tfoot, #qegouqwehx tr, #qegouqwehx td, #qegouqwehx th {
   border-style: none;
 }
 
-#qtcqsxpflf p {
+#qegouqwehx p {
   margin: 0;
   padding: 0;
 }
 
-#qtcqsxpflf .gt_table {
+#qegouqwehx .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -908,12 +949,12 @@ ul.task-list li input[type="checkbox"] {
   border-left-color: #D3D3D3;
 }
 
-#qtcqsxpflf .gt_caption {
+#qegouqwehx .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#qtcqsxpflf .gt_title {
+#qegouqwehx .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -925,7 +966,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-width: 0;
 }
 
-#qtcqsxpflf .gt_subtitle {
+#qegouqwehx .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -937,7 +978,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-width: 0;
 }
 
-#qtcqsxpflf .gt_heading {
+#qegouqwehx .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -949,13 +990,13 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#qtcqsxpflf .gt_bottom_border {
+#qegouqwehx .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#qtcqsxpflf .gt_col_headings {
+#qegouqwehx .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -970,7 +1011,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#qtcqsxpflf .gt_col_heading {
+#qegouqwehx .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -990,7 +1031,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#qtcqsxpflf .gt_column_spanner_outer {
+#qegouqwehx .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1002,15 +1043,15 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 4px;
 }
 
-#qtcqsxpflf .gt_column_spanner_outer:first-child {
+#qegouqwehx .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#qtcqsxpflf .gt_column_spanner_outer:last-child {
+#qegouqwehx .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#qtcqsxpflf .gt_column_spanner {
+#qegouqwehx .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1022,11 +1063,11 @@ ul.task-list li input[type="checkbox"] {
   width: 100%;
 }
 
-#qtcqsxpflf .gt_spanner_row {
+#qegouqwehx .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#qtcqsxpflf .gt_group_heading {
+#qegouqwehx .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1052,7 +1093,7 @@ ul.task-list li input[type="checkbox"] {
   text-align: left;
 }
 
-#qtcqsxpflf .gt_empty_group_heading {
+#qegouqwehx .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1067,15 +1108,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 
-#qtcqsxpflf .gt_from_md > :first-child {
+#qegouqwehx .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#qtcqsxpflf .gt_from_md > :last-child {
+#qegouqwehx .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#qtcqsxpflf .gt_row {
+#qegouqwehx .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1094,7 +1135,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#qtcqsxpflf .gt_stub {
+#qegouqwehx .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1107,7 +1148,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#qtcqsxpflf .gt_stub_row_group {
+#qegouqwehx .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1121,15 +1162,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: top;
 }
 
-#qtcqsxpflf .gt_row_group_first td {
+#qegouqwehx .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#qtcqsxpflf .gt_row_group_first th {
+#qegouqwehx .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#qtcqsxpflf .gt_summary_row {
+#qegouqwehx .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1139,16 +1180,16 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#qtcqsxpflf .gt_first_summary_row {
+#qegouqwehx .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#qtcqsxpflf .gt_first_summary_row.thick {
+#qegouqwehx .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#qtcqsxpflf .gt_last_summary_row {
+#qegouqwehx .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1158,7 +1199,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#qtcqsxpflf .gt_grand_summary_row {
+#qegouqwehx .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1168,7 +1209,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#qtcqsxpflf .gt_first_grand_summary_row {
+#qegouqwehx .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1178,7 +1219,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-color: #D3D3D3;
 }
 
-#qtcqsxpflf .gt_last_grand_summary_row_top {
+#qegouqwehx .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1188,11 +1229,11 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#qtcqsxpflf .gt_striped {
+#qegouqwehx .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#qtcqsxpflf .gt_table_body {
+#qegouqwehx .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1201,7 +1242,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#qtcqsxpflf .gt_footnotes {
+#qegouqwehx .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1215,7 +1256,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#qtcqsxpflf .gt_footnote {
+#qegouqwehx .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1224,7 +1265,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#qtcqsxpflf .gt_sourcenotes {
+#qegouqwehx .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1238,7 +1279,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#qtcqsxpflf .gt_sourcenote {
+#qegouqwehx .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1246,72 +1287,698 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#qtcqsxpflf .gt_left {
+#qegouqwehx .gt_left {
   text-align: left;
 }
 
-#qtcqsxpflf .gt_center {
+#qegouqwehx .gt_center {
   text-align: center;
 }
 
-#qtcqsxpflf .gt_right {
+#qegouqwehx .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qtcqsxpflf .gt_font_normal {
+#qegouqwehx .gt_font_normal {
   font-weight: normal;
 }
 
-#qtcqsxpflf .gt_font_bold {
+#qegouqwehx .gt_font_bold {
   font-weight: bold;
 }
 
-#qtcqsxpflf .gt_font_italic {
+#qegouqwehx .gt_font_italic {
   font-style: italic;
 }
 
-#qtcqsxpflf .gt_super {
+#qegouqwehx .gt_super {
   font-size: 65%;
 }
 
-#qtcqsxpflf .gt_footnote_marks {
+#qegouqwehx .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#qtcqsxpflf .gt_asterisk {
+#qegouqwehx .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#qtcqsxpflf .gt_indent_1 {
+#qegouqwehx .gt_indent_1 {
   text-indent: 5px;
 }
 
-#qtcqsxpflf .gt_indent_2 {
+#qegouqwehx .gt_indent_2 {
   text-indent: 10px;
 }
 
-#qtcqsxpflf .gt_indent_3 {
+#qegouqwehx .gt_indent_3 {
   text-indent: 15px;
 }
 
-#qtcqsxpflf .gt_indent_4 {
+#qegouqwehx .gt_indent_4 {
   text-indent: 20px;
 }
 
-#qtcqsxpflf .gt_indent_5 {
+#qegouqwehx .gt_indent_5 {
   text-indent: 25px;
 }
 
-#qtcqsxpflf .katex-display {
+#qegouqwehx .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#qtcqsxpflf div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#qegouqwehx div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="header gt_heading">
+<th colspan="7" class="gt_heading gt_title gt_font_normal gt_bottom_border">VO2max per Participant per Timepoint</th>
+</tr>
+<tr class="odd gt_col_headings">
+<th id="Participant ID" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Participant ID</th>
+<th id="Test 1" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Test 1</th>
+<th id="Test 2" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Test 2</th>
+<th id="Test 3" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Test 3</th>
+<th id="Test 4" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Test 4</th>
+<th id="Difference (T2 - T1)" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Difference (T2 - T1)</th>
+<th id="Difference (T4 - T3)" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Difference (T4 - T3)</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="id">G1_id1</td>
+<td class="gt_row gt_right" headers="t1">3,381.50</td>
+<td class="gt_row gt_right" headers="t2">3,065.00</td>
+<td class="gt_row gt_right" headers="t3">3,190.00</td>
+<td class="gt_row gt_right" headers="t4">3,343.00</td>
+<td class="gt_row gt_right" headers="Diff_T2_T1">−316.50</td>
+<td class="gt_row gt_right" headers="Diff_T4_T3">153.00</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="id">G1_id2</td>
+<td class="gt_row gt_right" headers="t1">2,771.00</td>
+<td class="gt_row gt_right" headers="t2">2,801.50</td>
+<td class="gt_row gt_right" headers="t3">2,464.50</td>
+<td class="gt_row gt_right" headers="t4">2,760.00</td>
+<td class="gt_row gt_right" headers="Diff_T2_T1">30.50</td>
+<td class="gt_row gt_right" headers="Diff_T4_T3">295.50</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="id">G1_id3</td>
+<td class="gt_row gt_right" headers="t1">4,234.50</td>
+<td class="gt_row gt_right" headers="t2">4,235.00</td>
+<td class="gt_row gt_right" headers="t3">3,693.50</td>
+<td class="gt_row gt_right" headers="t4">4,361.00</td>
+<td class="gt_row gt_right" headers="Diff_T2_T1">0.50</td>
+<td class="gt_row gt_right" headers="Diff_T4_T3">667.50</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="id">G2_4</td>
+<td class="gt_row gt_right" headers="t1">NA</td>
+<td class="gt_row gt_right" headers="t2">NA</td>
+<td class="gt_row gt_right" headers="t3">2,819.50</td>
+<td class="gt_row gt_right" headers="t4">2,893.00</td>
+<td class="gt_row gt_right" headers="Diff_T2_T1">NA</td>
+<td class="gt_row gt_right" headers="Diff_T4_T3">73.50</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="id">G2_5</td>
+<td class="gt_row gt_right" headers="t1">4,427.00</td>
+<td class="gt_row gt_right" headers="t2">4,359.50</td>
+<td class="gt_row gt_right" headers="t3">NA</td>
+<td class="gt_row gt_right" headers="t4">NA</td>
+<td class="gt_row gt_right" headers="Diff_T2_T1">−67.50</td>
+<td class="gt_row gt_right" headers="Diff_T4_T3">NA</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="id">G2_6</td>
+<td class="gt_row gt_right" headers="t1">3,704.50</td>
+<td class="gt_row gt_right" headers="t2">3,713.50</td>
+<td class="gt_row gt_right" headers="t3">NA</td>
+<td class="gt_row gt_right" headers="t4">NA</td>
+<td class="gt_row gt_right" headers="Diff_T2_T1">9.00</td>
+<td class="gt_row gt_right" headers="Diff_T4_T3">NA</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="id">G2_7</td>
+<td class="gt_row gt_right" headers="t1">5,116.50</td>
+<td class="gt_row gt_right" headers="t2">5,163.50</td>
+<td class="gt_row gt_right" headers="t3">4,951.00</td>
+<td class="gt_row gt_right" headers="t4">5,294.50</td>
+<td class="gt_row gt_right" headers="Diff_T2_T1">47.00</td>
+<td class="gt_row gt_right" headers="Diff_T4_T3">343.50</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="id">G2_8</td>
+<td class="gt_row gt_right" headers="t1">NA</td>
+<td class="gt_row gt_right" headers="t2">NA</td>
+<td class="gt_row gt_right" headers="t3">NA</td>
+<td class="gt_row gt_right" headers="t4">2,543.50</td>
+<td class="gt_row gt_right" headers="Diff_T2_T1">NA</td>
+<td class="gt_row gt_right" headers="Diff_T4_T3">NA</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="id">G3_9</td>
+<td class="gt_row gt_right" headers="t1">4,694.00</td>
+<td class="gt_row gt_right" headers="t2">4,640.50</td>
+<td class="gt_row gt_right" headers="t3">4,614.00</td>
+<td class="gt_row gt_right" headers="t4">NA</td>
+<td class="gt_row gt_right" headers="Diff_T2_T1">−53.50</td>
+<td class="gt_row gt_right" headers="Diff_T4_T3">NA</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="id">G3_10</td>
+<td class="gt_row gt_right" headers="t1">3,014.50</td>
+<td class="gt_row gt_right" headers="t2">3,103.50</td>
+<td class="gt_row gt_right" headers="t3">3,170.50</td>
+<td class="gt_row gt_right" headers="t4">3,093.00</td>
+<td class="gt_row gt_right" headers="Diff_T2_T1">89.00</td>
+<td class="gt_row gt_right" headers="Diff_T4_T3">−77.50</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="id">G3_11</td>
+<td class="gt_row gt_right" headers="t1">3,576.50</td>
+<td class="gt_row gt_right" headers="t2">3,713.00</td>
+<td class="gt_row gt_right" headers="t3">NA</td>
+<td class="gt_row gt_right" headers="t4">NA</td>
+<td class="gt_row gt_right" headers="Diff_T2_T1">136.50</td>
+<td class="gt_row gt_right" headers="Diff_T4_T3">NA</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="id">G3_12</td>
+<td class="gt_row gt_right" headers="t1">4,332.50</td>
+<td class="gt_row gt_right" headers="t2">4,362.00</td>
+<td class="gt_row gt_right" headers="t3">4,737.00</td>
+<td class="gt_row gt_right" headers="t4">NA</td>
+<td class="gt_row gt_right" headers="Diff_T2_T1">29.50</td>
+<td class="gt_row gt_right" headers="Diff_T4_T3">NA</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="id">G4_id13</td>
+<td class="gt_row gt_right" headers="t1">4,634.50</td>
+<td class="gt_row gt_right" headers="t2">4,606.50</td>
+<td class="gt_row gt_right" headers="t3">4,540.50</td>
+<td class="gt_row gt_right" headers="t4">NA</td>
+<td class="gt_row gt_right" headers="Diff_T2_T1">−28.00</td>
+<td class="gt_row gt_right" headers="Diff_T4_T3">NA</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="id">G4_id14</td>
+<td class="gt_row gt_right" headers="t1">4,556.50</td>
+<td class="gt_row gt_right" headers="t2">4,561.50</td>
+<td class="gt_row gt_right" headers="t3">4,437.00</td>
+<td class="gt_row gt_right" headers="t4">4,545.00</td>
+<td class="gt_row gt_right" headers="Diff_T2_T1">5.00</td>
+<td class="gt_row gt_right" headers="Diff_T4_T3">108.00</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="id">G4_id15</td>
+<td class="gt_row gt_right" headers="t1">4,350.50</td>
+<td class="gt_row gt_right" headers="t2">3,818.50</td>
+<td class="gt_row gt_right" headers="t3">4,134.00</td>
+<td class="gt_row gt_right" headers="t4">NA</td>
+<td class="gt_row gt_right" headers="Diff_T2_T1">−532.00</td>
+<td class="gt_row gt_right" headers="Diff_T4_T3">NA</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="id">G4_id16</td>
+<td class="gt_row gt_right" headers="t1">4,872.00</td>
+<td class="gt_row gt_right" headers="t2">5,050.00</td>
+<td class="gt_row gt_right" headers="t3">NA</td>
+<td class="gt_row gt_right" headers="t4">NA</td>
+<td class="gt_row gt_right" headers="Diff_T2_T1">178.00</td>
+<td class="gt_row gt_right" headers="Diff_T4_T3">NA</td>
+</tr>
+</tbody><tfoot class="gt_footnotes">
+<tr class="even">
+<td colspan="7" class="gt_footnote">Sample sizes: t1 = 14 , t2 = 14 , t3 = 11 , t4 = 8</td>
+</tr>
+</tfoot>
+
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="beregning-av-standardfeil-mellom-test-1-og-test-2" class="level3" data-number="1.2.4">
+<h3 data-number="1.2.4" class="anchored" data-anchor-id="beregning-av-standardfeil-mellom-test-1-og-test-2"><span class="header-section-number">1.2.4</span> Beregning av standardfeil mellom test 1 og test 2</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div id="crzruqjcre" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#crzruqjcre table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#crzruqjcre thead, #crzruqjcre tbody, #crzruqjcre tfoot, #crzruqjcre tr, #crzruqjcre td, #crzruqjcre th {
+  border-style: none;
+}
+
+#crzruqjcre p {
+  margin: 0;
+  padding: 0;
+}
+
+#crzruqjcre .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#crzruqjcre .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#crzruqjcre .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#crzruqjcre .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#crzruqjcre .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#crzruqjcre .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#crzruqjcre .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#crzruqjcre .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#crzruqjcre .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#crzruqjcre .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#crzruqjcre .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#crzruqjcre .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#crzruqjcre .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#crzruqjcre .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#crzruqjcre .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#crzruqjcre .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#crzruqjcre .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#crzruqjcre .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#crzruqjcre .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#crzruqjcre .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#crzruqjcre .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#crzruqjcre .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#crzruqjcre .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#crzruqjcre .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#crzruqjcre .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#crzruqjcre .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#crzruqjcre .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#crzruqjcre .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#crzruqjcre .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#crzruqjcre .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#crzruqjcre .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#crzruqjcre .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#crzruqjcre .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#crzruqjcre .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#crzruqjcre .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#crzruqjcre .gt_left {
+  text-align: left;
+}
+
+#crzruqjcre .gt_center {
+  text-align: center;
+}
+
+#crzruqjcre .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#crzruqjcre .gt_font_normal {
+  font-weight: normal;
+}
+
+#crzruqjcre .gt_font_bold {
+  font-weight: bold;
+}
+
+#crzruqjcre .gt_font_italic {
+  font-style: italic;
+}
+
+#crzruqjcre .gt_super {
+  font-size: 65%;
+}
+
+#crzruqjcre .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#crzruqjcre .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#crzruqjcre .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#crzruqjcre .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#crzruqjcre .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#crzruqjcre .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#crzruqjcre .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#crzruqjcre .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#crzruqjcre div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1339,27 +2006,27 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </section>
-<section id="beregning-av-standardfeil-mellom-test-3-og-test-4" class="level3" data-number="1.2.4">
-<h3 data-number="1.2.4" class="anchored" data-anchor-id="beregning-av-standardfeil-mellom-test-3-og-test-4"><span class="header-section-number">1.2.4</span> Beregning av standardfeil mellom test 3 og test 4</h3>
+<section id="beregning-av-standardfeil-mellom-test-3-og-test-4" class="level3" data-number="1.2.5">
+<h3 data-number="1.2.5" class="anchored" data-anchor-id="beregning-av-standardfeil-mellom-test-3-og-test-4"><span class="header-section-number">1.2.5</span> Beregning av standardfeil mellom test 3 og test 4</h3>
 <div class="cell">
 <div class="cell-output-display">
-<div id="jxccosibti" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#jxccosibti table {
+<div id="qmsihkfvia" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#qmsihkfvia table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#jxccosibti thead, #jxccosibti tbody, #jxccosibti tfoot, #jxccosibti tr, #jxccosibti td, #jxccosibti th {
+#qmsihkfvia thead, #qmsihkfvia tbody, #qmsihkfvia tfoot, #qmsihkfvia tr, #qmsihkfvia td, #qmsihkfvia th {
   border-style: none;
 }
 
-#jxccosibti p {
+#qmsihkfvia p {
   margin: 0;
   padding: 0;
 }
 
-#jxccosibti .gt_table {
+#qmsihkfvia .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1385,12 +2052,12 @@ ul.task-list li input[type="checkbox"] {
   border-left-color: #D3D3D3;
 }
 
-#jxccosibti .gt_caption {
+#qmsihkfvia .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#jxccosibti .gt_title {
+#qmsihkfvia .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1402,7 +2069,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-width: 0;
 }
 
-#jxccosibti .gt_subtitle {
+#qmsihkfvia .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1414,7 +2081,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-width: 0;
 }
 
-#jxccosibti .gt_heading {
+#qmsihkfvia .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1426,13 +2093,13 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#jxccosibti .gt_bottom_border {
+#qmsihkfvia .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#jxccosibti .gt_col_headings {
+#qmsihkfvia .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1447,7 +2114,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#jxccosibti .gt_col_heading {
+#qmsihkfvia .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1467,7 +2134,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#jxccosibti .gt_column_spanner_outer {
+#qmsihkfvia .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1479,15 +2146,15 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 4px;
 }
 
-#jxccosibti .gt_column_spanner_outer:first-child {
+#qmsihkfvia .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#jxccosibti .gt_column_spanner_outer:last-child {
+#qmsihkfvia .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#jxccosibti .gt_column_spanner {
+#qmsihkfvia .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1499,11 +2166,11 @@ ul.task-list li input[type="checkbox"] {
   width: 100%;
 }
 
-#jxccosibti .gt_spanner_row {
+#qmsihkfvia .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#jxccosibti .gt_group_heading {
+#qmsihkfvia .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1529,7 +2196,7 @@ ul.task-list li input[type="checkbox"] {
   text-align: left;
 }
 
-#jxccosibti .gt_empty_group_heading {
+#qmsihkfvia .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1544,15 +2211,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 
-#jxccosibti .gt_from_md > :first-child {
+#qmsihkfvia .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#jxccosibti .gt_from_md > :last-child {
+#qmsihkfvia .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#jxccosibti .gt_row {
+#qmsihkfvia .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1571,7 +2238,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#jxccosibti .gt_stub {
+#qmsihkfvia .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1584,7 +2251,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#jxccosibti .gt_stub_row_group {
+#qmsihkfvia .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1598,15 +2265,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: top;
 }
 
-#jxccosibti .gt_row_group_first td {
+#qmsihkfvia .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#jxccosibti .gt_row_group_first th {
+#qmsihkfvia .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#jxccosibti .gt_summary_row {
+#qmsihkfvia .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1616,16 +2283,16 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#jxccosibti .gt_first_summary_row {
+#qmsihkfvia .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#jxccosibti .gt_first_summary_row.thick {
+#qmsihkfvia .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#jxccosibti .gt_last_summary_row {
+#qmsihkfvia .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1635,7 +2302,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#jxccosibti .gt_grand_summary_row {
+#qmsihkfvia .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1645,7 +2312,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#jxccosibti .gt_first_grand_summary_row {
+#qmsihkfvia .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1655,7 +2322,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-color: #D3D3D3;
 }
 
-#jxccosibti .gt_last_grand_summary_row_top {
+#qmsihkfvia .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1665,11 +2332,11 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#jxccosibti .gt_striped {
+#qmsihkfvia .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#jxccosibti .gt_table_body {
+#qmsihkfvia .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1678,7 +2345,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#jxccosibti .gt_footnotes {
+#qmsihkfvia .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1692,7 +2359,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#jxccosibti .gt_footnote {
+#qmsihkfvia .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1701,7 +2368,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#jxccosibti .gt_sourcenotes {
+#qmsihkfvia .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1715,7 +2382,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#jxccosibti .gt_sourcenote {
+#qmsihkfvia .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1723,72 +2390,72 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#jxccosibti .gt_left {
+#qmsihkfvia .gt_left {
   text-align: left;
 }
 
-#jxccosibti .gt_center {
+#qmsihkfvia .gt_center {
   text-align: center;
 }
 
-#jxccosibti .gt_right {
+#qmsihkfvia .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#jxccosibti .gt_font_normal {
+#qmsihkfvia .gt_font_normal {
   font-weight: normal;
 }
 
-#jxccosibti .gt_font_bold {
+#qmsihkfvia .gt_font_bold {
   font-weight: bold;
 }
 
-#jxccosibti .gt_font_italic {
+#qmsihkfvia .gt_font_italic {
   font-style: italic;
 }
 
-#jxccosibti .gt_super {
+#qmsihkfvia .gt_super {
   font-size: 65%;
 }
 
-#jxccosibti .gt_footnote_marks {
+#qmsihkfvia .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#jxccosibti .gt_asterisk {
+#qmsihkfvia .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#jxccosibti .gt_indent_1 {
+#qmsihkfvia .gt_indent_1 {
   text-indent: 5px;
 }
 
-#jxccosibti .gt_indent_2 {
+#qmsihkfvia .gt_indent_2 {
   text-indent: 10px;
 }
 
-#jxccosibti .gt_indent_3 {
+#qmsihkfvia .gt_indent_3 {
   text-indent: 15px;
 }
 
-#jxccosibti .gt_indent_4 {
+#qmsihkfvia .gt_indent_4 {
   text-indent: 20px;
 }
 
-#jxccosibti .gt_indent_5 {
+#qmsihkfvia .gt_indent_5 {
   text-indent: 25px;
 }
 
-#jxccosibti .katex-display {
+#qmsihkfvia .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#jxccosibti div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#qmsihkfvia div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>

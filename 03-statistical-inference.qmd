@@ -5,6 +5,7 @@ editor_options:
 editor: 
   markdown: 
     wrap: sentence
+    bibliography: bibliography.bib
 ---
 
 # Drawing inference from statistical models, and statistical power
